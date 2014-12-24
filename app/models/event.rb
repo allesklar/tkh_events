@@ -13,4 +13,14 @@ class Event < ActiveRecord::Base
     name ? "#{id}-#{name.to_url}" : id
   end
 
+  scope :published, -> { where( published: true ) }
+  scope :by_recent, -> { order('updated_at desc') }
+
+  def self.duplicate( source_event_id )
+    old_event = find( source_event_id )
+    new_event = old_event.dup
+    new_event.name = "Copy of #{old_event.name}"
+    new_event.save
+  end
+
 end

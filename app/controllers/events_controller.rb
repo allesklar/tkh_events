@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @events = Event.all
+    @events = Event.by_recent
     switch_to_admin_layout
   end
 
@@ -54,6 +54,11 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :no_content }
     end
+  end
+
+  def duplicate
+    Event.duplicate(params[:id])
+    redirect_to events_path, notice: 'Your event has been duplicated.'
   end
 
   private
