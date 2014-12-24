@@ -1,0 +1,32 @@
+<h1>Workshops & Upcoming Events</h1>
+
+<%= render 'tab_admin_menu' %>
+
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Starting on</th>
+      <th><%= t('actions') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% unless @events.nil? %>
+      <% for event in @events do %>
+        <tr>
+          <td><%= link_to event.name, event %></td>
+          <td><%= l event.starts_at, format: :tkh_default %></td>
+          <td><%= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_event_path(event), :class => 'btn btn-xs btn-default', title: t('edit') %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr> <td colspan="3">There are no events yet.</td> </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<%= link_to 'create new', new_event_path, class: 'btn btn-xs btn-default' %>
+
+<%= render 'shared/admin_sidebar' %>

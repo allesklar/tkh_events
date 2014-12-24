@@ -1,0 +1,11 @@
+<%= simple_form_for(@event, :html => { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+    <%= f.input :name, input_html: { size: 45 } %>
+    <%= f.input :starts_at %>
+    <%= f.input :published %>
+    <%= f.input :description, :input_html => { cols: 45, rows: 3 } %>
+    <%= f.input :body, :input_html => { rows: 20, class: 'ckeditor' } %>
+    <br />
+    <%= f.button :submit, class: 'btn btn-primary' %>
+<% end %>

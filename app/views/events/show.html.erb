@@ -1,0 +1,13 @@
+<% content_for :meta_title, @event.name %>
+<% content_for :meta_description, @event.description %>
+<% content_for :canonical_link, link_to('', @event, rel: 'canonical') %>
+
+<h1><%= @event.name %></h1>
+<p class='event-starting-date'>
+  <strong>Starting Date & Time</strong><br />
+  <%= l @event.starts_at, format: :tkh_default %>
+</p>
+
+<%= raw @event.body %>
+
+<%= render( 'admin_context_menu', event: @event) %>
