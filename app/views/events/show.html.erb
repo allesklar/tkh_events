@@ -11,3 +11,5 @@
 <%= raw @event.body %>
 
 <%= render( 'admin_context_menu', event: @event) %>
+<%# partial in tkh_menus gem or has to be added in host app %>
+<%= render './shared/menus' %>
