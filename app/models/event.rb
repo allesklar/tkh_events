@@ -14,6 +14,8 @@ class Event < ActiveRecord::Base
   end
 
   scope :published, -> { where( published: true ) }
+  scope :in_the_future, -> { where( 'starts_at >= ?', Time.zone.now.beginning_of_day ) }
+  scope :chronologically, -> { order 'starts_at' }
   scope :by_recent, -> { order('updated_at desc') }
 
   def self.duplicate( source_event_id )
