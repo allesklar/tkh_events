@@ -2,6 +2,8 @@
 <% content_for :meta_description, @event.description %>
 <% content_for :canonical_link, link_to('', @event, rel: 'canonical') %>
 
+<%= render 'draft_notice' unless @event.published? %>
+
 <h1><%= @event.name %></h1>
 <p class='event-starting-date'>
   <strong>Starting Date & Time</strong><br />
