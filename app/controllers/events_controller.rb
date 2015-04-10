@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :authenticate, :except => 'show'
   before_filter :authenticate_with_admin, :except => 'show'
 
-  before_action :set_event, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish ]
 
   def index
     @events = Event.by_recent
@@ -59,6 +59,12 @@ class EventsController < ApplicationController
   def duplicate
     Event.duplicate(params[:id])
     redirect_to events_path, notice: 'Your event has been duplicated.'
+  end
+
+  def publish
+    @event.published = true
+    @event.save
+    redirect_to @event, notice: 'This event was published'
   end
 
   private
