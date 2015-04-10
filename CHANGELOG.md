@@ -1,6 +1,13 @@
 # TKH Content
 
 
+
+## 0.0.4
+
+* Added an info notice on events page for drafts.
+* Added the ability to publish on event from the context admin sidebar.
+
+
 ## 0.0.3
 
 * Added a few scopes in event model and created a partial of upcoming events to go into sidebar.
