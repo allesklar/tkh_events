@@ -2,6 +2,12 @@
 
 
 
+## 0.0.5
+
+* Improved markup of upcoming event partials.
+* Added hints to events form.
+
+
 ## 0.0.4
 
 * Added an info notice on events page for drafts.
