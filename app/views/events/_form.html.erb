@@ -1,11 +1,15 @@
 <%= simple_form_for @event, :html => { role: 'form' } do |f| %>
   <%= f.error_notification %>
 
-    <%= f.input :name, input_html: { size: 45 } %>
+    <%= f.input :name, input_html: { size: 45 }, hint: 'short and sweet' %>
     <%= f.input :starts_at %>
     <%= f.input :published %>
-    <%= f.input :description, :input_html => { cols: 45, rows: 3 } %>
-    <%= f.input :body, :input_html => { rows: 20, class: 'ckeditor' } %>
+    <%= f.input :description,
+                input_html: { cols: 45, rows: 3 },
+                hint: 'Used by search engines and in several places in your site. Should make users want to visit the whole page.' %>
+    <%= f.input :body,
+                input_html: { rows: 20, class: 'ckeditor' },
+                hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to the user." %>
     <br />
     <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>
