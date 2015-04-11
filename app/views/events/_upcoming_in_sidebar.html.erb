@@ -5,9 +5,9 @@
   <% @events.each do |event| %>
     <div class="sidebar-individual-event">
       <h3><%= link_to event.name, event %></h3>
-      <h4>starting: <%= l event.starts_at, format: :tkh_default %></h4>
+      <p class='starting-date'><%= l event.starts_at, format: :tkh_default %></p>
       <p>
-        <%= event.description %><br />
+        <%= event.description %>
         <%= link_to 'see details', event %>
       </p>
     </div>
