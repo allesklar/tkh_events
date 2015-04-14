@@ -2,6 +2,11 @@
 
 
 
+## 0.0.6
+
+* Truncated event description in upcoming events sidebar partial.
+
+
 ## 0.0.5
 
 * Improved markup of upcoming event partials.
