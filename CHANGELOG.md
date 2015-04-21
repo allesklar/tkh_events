@@ -2,6 +2,14 @@
 
 
 
+## 0.1
+
+* Bumped version to reflect maturation of gem.
+* Fixed local heading variable and added a local variable for number of events displayed in sidebar.
+* Added a local variable in sidebar event partial for optional link to events page.
+* Removed the starting before the date in partial of upcoming events.
+
+
 ## 0.0.6
 
 * Truncated event description in upcoming events sidebar partial.
