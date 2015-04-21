@@ -1,7 +1,10 @@
-<% @events = Event.published.in_the_future.chronologically %>
+<% local_assigns[:heading].present? ? heading = local_assigns[:heading] : heading = 'upcoming events' %>
+<% local_assigns[:number_displayed].present? ? number_displayed = local_assigns[:number_displayed] : number_displayed = 5 %>
+
+<% @events = Event.published.in_the_future.limit(number_displayed).chronologically %>
 
 <% unless @events.blank? %>
-  <h2><%= heading || 'upcoming events' %></h2>
+  <h2><%= heading %></h2>
   <% @events.each do |event| %>
     <div class="sidebar-individual-event">
       <h3><%= link_to event.name, event %></h3>
