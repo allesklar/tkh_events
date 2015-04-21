@@ -4,7 +4,7 @@
   <% @events.each do |event| %>
     <div class="individual-event-in-list">
       <h3><%= link_to event.name, event %></h3>
-      <p class='starting-date'>starting: <%= l event.starts_at, format: :tkh_default %></p>
+      <p class='starting-date'><%= l event.starts_at, format: :tkh_default %></p>
       <p>
         <%= event.description %><br />
         <%= link_to 'see details', event %>
