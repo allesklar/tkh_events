@@ -1,7 +1,7 @@
 <% local_assigns[:heading].present? ? heading = local_assigns[:heading] : heading = 'upcoming events' %>
 <% local_assigns[:number_displayed].present? ? number_displayed = local_assigns[:number_displayed] : number_displayed = 5 %>
 
-<% @events = Event.published.in_the_future.limit(number_displayed).chronologically %>
+<% @events = Event.published.in_the_future.chronologically.limit(number_displayed) %>
 
 <% unless @events.blank? %>
   <h2><%= heading %></h2>
