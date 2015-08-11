@@ -18,6 +18,10 @@ class Event < ActiveRecord::Base
   scope :chronologically, -> { order 'starts_at' }
   scope :by_recent, -> { order('updated_at desc') }
 
+  def short_name
+    nickname || name || "no name given"
+  end
+
   def self.duplicate( source_event_id )
     old_event = find( source_event_id )
     new_event = old_event.dup

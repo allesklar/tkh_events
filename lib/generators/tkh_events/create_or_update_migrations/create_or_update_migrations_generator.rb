@@ -17,7 +17,7 @@ module TkhEvents
 
       def copy_migrations
         puts 'creating or updating event migrations'
-        migration_template "create_events.rb", "db/migrate/create_events.rb"
+        migration_template "add_nickname_to_events.rb", "db/migrate/add_nickname_to_events.rb"
       end
 
     end

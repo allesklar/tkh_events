@@ -4,10 +4,9 @@
 
 <%= render 'draft_notice' unless @event.published? %>
 
-<h1><%= @event.name %></h1>
+<h1><%= @event.short_name %></h1>
 <p class='event-starting-date'>
-  <strong>Starting Date & Time</strong><br />
-  <%= l @event.starts_at, format: :tkh_default %>
+  <strong>Starting:</strong> <%= l @event.starts_at, format: :tkh_default %>
 </p>
 
 <%= raw @event.body %>

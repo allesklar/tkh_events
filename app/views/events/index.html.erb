@@ -1,6 +1,4 @@
-<h1>Workshops & Upcoming Events</h1>
-
-<%= render 'tab_admin_menu' %>
+<%= render 'header' %>
 
 <table class='table table-striped'>
   <thead>
@@ -17,7 +15,7 @@
         <tr>
           <td><%= link_to event.name, event %></td>
           <td><%= l event.starts_at, format: :tkh_default %></td>
-          <td><%= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_event_path(event), :class => 'btn btn-xs btn-default', title: t('edit') %><%= link_to "<span class='glyphicon glyphicon-plus'></span> duplicate".html_safe, duplicate_event_path(event), :class => 'btn btn-xs btn-default', method: :post %></td>
+          <td><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), :class => 'btn btn-xs btn-primary', title: t('edit') %><%= link_to "<span class='glyphicon glyphicon-plus'></span> duplicate".html_safe, duplicate_event_path(event), :class => 'btn btn-xs btn-default', method: :post %></td>
         </tr>
       <% end %>
     <% else %>
@@ -27,6 +25,6 @@
 
 </table>
 
-<%= link_to 'create new', new_event_path, class: 'btn btn-xs btn-default' %>
+<%= link_to "<span class='glyphicon glyphicon-plus'></span> new event".html_safe, new_event_path, class: 'btn btn-default' %>
 
 <%= render 'shared/admin_sidebar' %>
