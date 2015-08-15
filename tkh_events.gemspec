@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest"
 
   spec.add_dependency 'tkh_search'
+  spec.add_dependency 'tkh_toolbox'
 end

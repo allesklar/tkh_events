@@ -11,6 +11,8 @@
 
 <%= raw @event.body %>
 
+<%= render 'shared/social_sharing', meta_title: @event.short_name %>
+
 <%= render( 'admin_context_menu', event: @event) %>
 <%# partial in tkh_menus gem or has to be added in host app %>
 <%= render './shared/menus' %>
