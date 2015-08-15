@@ -1,12 +1,12 @@
 class EventsController < ApplicationController
 
-  before_filter :authenticate, :except => 'show'
+  before_filter :authenticate,            :except => 'show'
   before_filter :authenticate_with_admin, :except => 'show'
 
-  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register ]
 
   def index
-    @events = Event.by_recent
+    @events = Event.by_recent.paginate page: params[:page], per_page: 20
     switch_to_admin_layout
   end
 
@@ -67,6 +67,15 @@ class EventsController < ApplicationController
     redirect_to @event, notice: 'This event was published'
   end
 
+  def register
+    registration = Registration.create event_id: @event.id, registrant_id: current_user.id
+    if registration
+      redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Check your email inbox or spam folder for your official confirmation".html_safe
+    else
+      redirect_to @event, warning: "There was a problem recording your registration. Please try again."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
@@ -75,6 +84,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit( :name, :nickname, :description, :body, :starts_at, :published )
+      params.require(:event).permit( :name, :nickname, :description, :body, :starts_at, :price, :maximum_number_of_registrants, :confirmation_emails_text, :confirmation_emails_html, :published )
     end
 end

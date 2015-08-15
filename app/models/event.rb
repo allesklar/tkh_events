@@ -1,5 +1,7 @@
 class Event < ActiveRecord::Base
 
+  has_many :registrations
+
   tkh_searchable
   def self.tkh_search_indexable_fields
     indexable_fields = {

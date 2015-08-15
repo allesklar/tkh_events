@@ -5,11 +5,18 @@
 <%= render 'draft_notice' unless @event.published? %>
 
 <h1><%= @event.short_name %></h1>
+
 <p class='event-starting-date'>
   <strong>Starting:</strong> <%= l @event.starts_at, format: :tkh_default %>
 </p>
 
 <%= raw @event.body %>
+
+<div id="registration-area">
+  <h2>Register Now!</h2>
+  <p>Book your place now and we'll send you payment instructions.</p>
+  <p><%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> register".html_safe, register_event_path(@event), method: :post, class: 'btn btn-success' %></p>
+</div>
 
 <%# partial in tkh_toolbox gem or has to be added in host app %>
 <%= render 'shared/social_sharing', meta_title: @event.short_name %>

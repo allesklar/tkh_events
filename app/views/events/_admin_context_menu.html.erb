@@ -2,14 +2,23 @@
 
   <% content_for :admin_context_menu do %>
     <h2><%= t('admin_section') %></h2>
-    <ul class="list-group">
-      <li class="list-group-item"><%= link_to t('admin_panel'), events_path %></li>
-      <%= content_tag :li, link_to( "#{t('activerecord.models.comments').capitalize} <span class='badge'>#{Comment.pending.count}</span>".html_safe, pending_comments_path ), class: 'list-group-item' if Comment.pending.count > 0 %>
-      <li class="list-group-item"><%= link_to 'Modify this program', edit_event_path(event) %></li>
-      <% unless event.published? %>
-        <%= content_tag :li, link_to( 'Publish this program', publish_event_path(event), method: :post), class: 'list-group-item' %>
-      <% end %>
-    </ul>
-  <% end -%>
+    <p>
+      <%= link_to "<span class='glyphicon glyphicon-list'></span> all events".html_safe, events_path, class: 'btn btn-sm btn-default' %>
+      <%= link_to "<span class='glyphicon glyphicon-comment'></span> #{t('activerecord.models.comments').capitalize} <span class='badge'>#{Comment.pending.count}</span>".html_safe, pending_comments_path, class: 'btn btn-sm btn-default' if Comment.pending.count > 0 %>
+      <%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), class: 'btn btn-sm btn-default' %>
+      <%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> publish this program".html_safe, publish_event_path(event), method: :post, class: 'btn btn-sm btn-success' unless event.published? %>
+    </p>
+    <h3>Registrants</h3>
+    <% registrations = event.registrations %>
+    <% if registrations.any? %>
+      <ol>
+        <% registrations.each do |registration| %>
+          <%= content_tag :li, link_to( registration.registrant.name, member_path( registration.registrant ) ) %>
+        <% end %>
+      </ol>
+    <% else %>
+      <p>Nobody registered yet.</p>
+    <% end %>
+  <% end %>
 
-<% end -%>
+<% end %>

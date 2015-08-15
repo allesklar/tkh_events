@@ -4,12 +4,14 @@
     <%= f.input :name,
                 input_html: { size: 55 },
                 placeholder: 'program name in Paris with Teacher Name',
-                hint: 'imagine somebody sees that title in the middle of Google results or in a Facebook link. How do you TRUTHFULLY make the users click?' %>
+                hint: 'Imagine somebody sees that title in the middle of Google results or in a Facebook link. How do you TRUTHFULLY make the users click?' %>
     <%= f.input :nickname,
                 input_html: { size: 55 },
                 placeholder: 'just the program name',
-                hint: "for a list. Don't repeat info in every program. For example location and teacher if they are always the same." %>
+                hint: "For a list. Don't repeat info in every program. For example location and teacher if they are always the same." %>
     <%= f.input :starts_at %>
+    <%= f.input :price, placeholder: 55, hint: "Integers. No decimals." %>
+    <%= f.input :maximum_number_of_registrants, placeholder: 125 %>
     <%= f.input :published %>
     <%= f.input :description,
                 input_html: { cols: 55, rows: 3 },
@@ -17,6 +19,14 @@
     <%= f.input :body,
                 input_html: { rows: 30, class: 'ckeditor' },
                 hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to the user." %>
-    <br />
+
+    <hr />
+
+    <%= f.input :confirmation_emails_text,
+                input_html: { cols: 55, rows: 30 } %>
+    <%= f.input :confirmation_emails_html,
+                input_html: { rows: 30, class: 'ckeditor' },
+                hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to the user." %>
+
     <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>
