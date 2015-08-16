@@ -1,1 +1,5 @@
+<h2>Course Details</h2>
+
+<p>All general info is found at <%= link_to @event.short_name, event_url(id: @event) %></p>
+
 <%= raw @event.confirmation_emails_html %>
