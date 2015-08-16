@@ -5,9 +5,21 @@
     <p>
       <%= link_to "<span class='glyphicon glyphicon-list'></span> all events".html_safe, events_path, class: 'btn btn-sm btn-default' %>
       <%= link_to "<span class='glyphicon glyphicon-comment'></span> #{t('activerecord.models.comments').capitalize} <span class='badge'>#{Comment.pending.count}</span>".html_safe, pending_comments_path, class: 'btn btn-sm btn-default' if Comment.pending.count > 0 %>
+      <%= link_to "<span class='glyphicon glyphicon-eye-open'></span> admin view".html_safe, admin_view_event_path(event), class: 'btn btn-sm btn-default' %>
       <%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), class: 'btn btn-sm btn-default' %>
       <%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> publish this program".html_safe, publish_event_path(event), method: :post, class: 'btn btn-sm btn-success' unless event.published? %>
     </p>
+
+
+    <% if @event.organizers.count > 0 %>
+      <h3>Organizers</h3>
+        <ul>
+          <% @event.organizers.each do |organizer| %>
+            <%= content_tag :li, "#{link_to organizer.name, member_path(organizer)}, #{organizer.email}".html_safe %>
+          <% end %>
+        </ul>
+    <% end %>
+
     <h3>Registrants</h3>
     <% registrations = event.registrations %>
     <% if registrations.any? %>

@@ -1,0 +1,8 @@
+<%= form_for @event, url: add_organizer_event_path(@event) do |f| %>
+
+  <% # FIXME - set up ajax autocomplete %>
+  <%= f.select :organizer_id, Organizer.with_a_name.collect { |o| [ "#{o.name}, #{o.email}", o.id ] }, include_blank: true %>
+
+  <%= f.submit "add organizer to this event", class: 'btn btn-sm btn-primary' %>
+
+<% end %>

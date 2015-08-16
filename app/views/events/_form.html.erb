@@ -14,19 +14,19 @@
     <%= f.input :maximum_number_of_registrants, placeholder: 125 %>
     <%= f.input :published %>
     <%= f.input :description,
-                input_html: { cols: 55, rows: 3 },
+                input_html: { cols: 75, rows: 3 },
                 hint: 'Used by search engines and in several places in your site. Should make users want to visit the whole page.' %>
     <%= f.input :body,
                 input_html: { rows: 30, class: 'ckeditor' },
-                hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to the user." %>
+                hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to your user." %>
 
     <hr />
 
     <%= f.input :confirmation_emails_text,
-                input_html: { cols: 55, rows: 30 } %>
+                input_html: { cols: 75, rows: 30 } %>
     <%= f.input :confirmation_emails_html,
                 input_html: { rows: 30, class: 'ckeditor' },
-                hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to the user." %>
+                hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to your user." %>
 
     <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>

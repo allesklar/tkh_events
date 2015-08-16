@@ -1,0 +1,38 @@
+<%= render 'header' %>
+
+<%= content_tag :h1, @event.name %>
+<h2>Starting: <%= l @event.starts_at, format: :tkh_default %></h2>
+
+<h3>Organizers</h3>
+<p>By default, the registration email correspondance originates from the contact_email as configured in the Setting model of the tkh_admin_panel gem. </p>
+<p>For some events, we want 1 or more specific individuals to communicate with the registrants. Hence, this section.</p>
+
+<ul>
+  <% if @event.organizers.count == 0 %>
+    <li>No organizers have been assigned to this event. The participants will communicate with <%= Setting.first.try(:contact_email) %>.</li>
+  <% else # no event organizers %>
+    The organizers are:
+      <% @event.organizers.each do |organizer| %>
+        <%= content_tag :li, "#{link_to organizer.name, member_path(organizer)}, #{organizer.email}".html_safe %>
+      <% end %>
+  <% end %>
+</ul>
+
+<%= render 'add_organizer_to_event_form' %>
+
+<h3>Registrants</h3>
+
+<% if @event.registrations.any? %>
+  <ol>
+    <% @event.registrations.each do |registration| %>
+      <%= content_tag :li, link_to( registration.registrant.name, member_path( registration.registrant ) ) %>
+    <% end %>
+  </ol>
+<% else %>
+  <ul><li>Nobody registered yet.</li></ul>
+<% end %>
+
+<br />
+<p><%= link_to "<span class='glyphicon glyphicon-eye-open'></span> view event page".html_safe, @event, class: 'btn btn-default' %><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(@event), class: 'btn btn-default' %></p>
+
+<%= render 'shared/admin_sidebar' %>

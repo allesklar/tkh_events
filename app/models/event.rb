@@ -1,6 +1,12 @@
 class Event < ActiveRecord::Base
 
+  has_many :event_organizers
+  has_many :organizers, through: :event_organizers
+
   has_many :registrations
+  has_many :registrants, through: :registrations
+
+  attr_reader(:organizer_id) # to be used in the add_organizer_to_event_form partial
 
   tkh_searchable
   def self.tkh_search_indexable_fields
