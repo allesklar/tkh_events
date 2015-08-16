@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
-  before_filter :authenticate,            :except => 'show'
-  before_filter :authenticate_with_admin, :except => 'show'
+  before_filter :authenticate,            :except => [ 'show', 'register']
+  before_filter :authenticate_with_admin, :except => [ 'show', 'register']
 
   before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register ]
 
@@ -70,9 +70,11 @@ class EventsController < ApplicationController
   def register
     registration = Registration.create event_id: @event.id, registrant_id: current_user.id
     if registration
-      redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Check your email inbox or spam folder for your official confirmation".html_safe
+      Activity.create doer_id: current_user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
+      send_confirmation_email
+      redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Check your email inbox or spam folder for your official confirmation.".html_safe
     else
-      redirect_to @event, warning: "There was a problem recording your registration. Please try again."
+      redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
     end
   end
 
@@ -85,5 +87,13 @@ class EventsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit( :name, :nickname, :description, :body, :starts_at, :price, :maximum_number_of_registrants, :confirmation_emails_text, :confirmation_emails_html, :published )
+    end
+
+    def send_confirmation_email
+      begin
+        EventMailer.confirmation(current_user, @event).deliver_now
+      rescue Exception => e
+        AdminMailer.rescued_exceptions(e, "Some exception occurred while trying to send an event confirmation email.").deliver_now
+      end
     end
 end

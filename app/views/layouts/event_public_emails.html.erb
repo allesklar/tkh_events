@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <%= stylesheet_link_tag 'event_public_emails' %>
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <td id="header">
+          <%= content_tag(:h1, link_to( Setting.first.try(:site_name), root_url), id: 'header-title') %>
+          <%# an email customized logo would be better but for now all tkh sites have an admin-logo %>
+          <%= link_to image_tag('admin/admin-logo.jpg', id: 'admin-logo'), root_url %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= yield %></td>
+      </tr>
+    </table>
+  </body>
+
+</html>

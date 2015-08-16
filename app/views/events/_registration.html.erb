@@ -1,0 +1,24 @@
+<div id="registration-area" class="panel panel-success">
+
+  <div class="panel-heading">
+    <h2 class="panel-title">Event Registration</h3>
+  </div>
+
+  <div class="panel-body">
+
+    <% if current_user %>
+      <% if Registration.find_by event_id: @event.id, registrant_id: current_user.id %>
+        <p>You are registered for this event.</p>
+      <% else # the user has not yet registered for this event %>
+        <p>Book your place now and we'll send you payment instructions.</p>
+        <p><%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> register now!".html_safe, register_event_path(@event), method: :post, class: 'btn btn-success' %></p>
+      <% end %>
+    <% else # not logged in %>
+      <% # TODO embedded ajaxified form to log in %>
+      <h2>Log in to Register for this Event</h2>
+      <p>To register for this program, you first need to login.</p>
+      <%= render 'reception/email_input_form', submit_message: 'login' %>
+    <% end %>
+
+  </div>
+</div>
