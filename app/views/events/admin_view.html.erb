@@ -13,7 +13,10 @@
   <% else # no event organizers %>
     The organizers are:
       <% @event.organizers.each do |organizer| %>
-        <%= content_tag :li, "#{link_to organizer.name, member_path(organizer)}, #{organizer.email}".html_safe %>
+        <li>
+          <%= "#{link_to organizer.name, member_path(organizer)}, #{organizer.email}".html_safe %>
+          <%= link_to "<span class='glyphicon glyphicon-trash'></span> remove".html_safe, remove_organizer_event_path(id: @event.id, organizer_id: organizer.id), method: :delete, class: 'btn btn-xs btn-danger' %>
+        </li>
       <% end %>
   <% end %>
 </ul>

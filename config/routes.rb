@@ -3,11 +3,12 @@ Rails.application.routes.draw do
 
     resources :events do
       member do
-        get   :admin_view
-        patch :add_organizer
-        post  :duplicate
-        post  :publish
-        post  :register
+        delete  :remove_organizer
+        get     :admin_view
+        patch   :add_organizer
+        post    :duplicate
+        post    :publish
+        post    :register
       end
     end
 

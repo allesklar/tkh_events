@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :authenticate,            :except => [ 'show', 'register']
   before_filter :authenticate_with_admin, :except => [ 'show', 'register']
 
-  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :admin_view, :add_organizer ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :admin_view, :add_organizer, :remove_organizer ]
 
   def index
     @events = Event.by_recent.paginate page: params[:page], per_page: 20
@@ -78,6 +78,12 @@ class EventsController < ApplicationController
     else
       redirect_to admin_view_event_path(@event), warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem adding the organizer to the event. Please try again.".html_safe
     end
+  end
+
+  def remove_organizer
+    event_organizer = EventOrganizer.find_by event_id: @event.id, organizer_id: params[:organizer_id]
+    event_organizer.destroy
+    redirect_to admin_view_event_path(@event), notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> The organizer has been removed.".html_safe
   end
 
   def register
