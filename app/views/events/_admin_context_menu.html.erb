@@ -3,11 +3,7 @@
   <% content_for :admin_context_menu do %>
     <h2><%= t('admin_section') %></h2>
     <p>
-      <%= link_to "<span class='glyphicon glyphicon-list'></span> all events".html_safe, events_path, class: 'btn btn-sm btn-default' %>
-      <%= link_to "<span class='glyphicon glyphicon-comment'></span> #{t('activerecord.models.comments').capitalize} <span class='badge'>#{Comment.pending.count}</span>".html_safe, pending_comments_path, class: 'btn btn-sm btn-default' if Comment.pending.count > 0 %>
-      <%= link_to "<span class='glyphicon glyphicon-eye-open'></span> admin view".html_safe, admin_view_event_path(event), class: 'btn btn-sm btn-default' %>
-      <%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), class: 'btn btn-sm btn-default' %>
-      <%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> publish this program".html_safe, publish_event_path(event), method: :post, class: 'btn btn-sm btn-success' unless event.published? %>
+      <%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), class: 'btn btn-sm btn-default' %><%= link_to "<span class='glyphicon glyphicon-eye-open'></span> admin view".html_safe, admin_view_event_path(event), class: 'btn btn-sm btn-default' %><%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> publish".html_safe, publish_event_path(event), method: :post, class: 'btn btn-sm btn-success' unless event.published? %><%= link_to "<span class='glyphicon glyphicon-list'></span> all events".html_safe, events_path, class: 'btn btn-sm btn-default' %><%= link_to "<span class='glyphicon glyphicon-comment'></span> #{t('activerecord.models.comments').capitalize} <span class='badge'>#{Comment.pending.count}</span>".html_safe, pending_comments_path, class: 'btn btn-sm btn-default' if Comment.pending.count > 0 %>
     </p>
 
 
