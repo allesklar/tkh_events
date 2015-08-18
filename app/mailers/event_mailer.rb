@@ -1,18 +1,15 @@
 class EventMailer < ActionMailer::Base
   include Roadie::Rails::Automatic
-  # default from: "#{Setting.first.try(:site_name)} <#{Setting.first.contact_email}>"
+  $site_sender = "#{Setting.first.try(:site_name)} <#{Setting.first.contact_email}>"
 
   def confirmation(user, event)
     @user = user
     @event = event
 
     senders = []
-    if event.organizers.any?
-      event.organizers.each do |organizer|
-        senders << "#{organizer.name} <#{organizer.email}>"
-      end
-    else
-      senders << "#{Setting.first.try(:site_name)} <#{Setting.first.contact_email}>"
+    senders << $site_sender
+    event.organizers.each do |organizer|
+      senders << "#{organizer.name} <#{organizer.email}>"
     end
 
     subject = "Registration confirmation for the #{@event.short_name}"
