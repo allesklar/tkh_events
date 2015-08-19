@@ -30,6 +30,10 @@ class Event < ActiveRecord::Base
     nickname || name || "no name given"
   end
 
+  def shortest_name
+    tiny_name || short_name
+  end
+
   def self.duplicate( source_event_id )
     old_event = find( source_event_id )
     new_event = old_event.dup

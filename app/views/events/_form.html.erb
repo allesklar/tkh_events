@@ -9,6 +9,10 @@
                 input_html: { size: 55 },
                 placeholder: 'just the program name',
                 hint: "For a list. Don't repeat info in every program. For example location and teacher if they are always the same." %>
+    <%= f.input :tiny_name,
+                input_html: { size: 55 },
+                placeholder: 'workshop in Berlin',
+                hint: "For a sibear list. Focus on the differentiators." %>
     <%= f.input :starts_at %>
     <%= f.input :price, placeholder: 55, hint: "Integers. No decimals." %>
     <%= f.input :maximum_number_of_registrants, placeholder: 125 %>
