@@ -1,19 +1,21 @@
 <% local_assigns[:heading].present? ? heading = local_assigns[:heading] : heading = 'upcoming events' %>
 <% local_assigns[:number_displayed].present? ? number_displayed = local_assigns[:number_displayed] : number_displayed = 5 %>
 
-<% @events = Event.published.in_the_future.chronologically.limit(number_displayed) %>
+<% events = Event.published.in_the_future.chronologically.limit(number_displayed) %>
 
-<% unless @events.blank? %>
-  <h2><%= heading %></h2>
-  <% @events.each do |event| %>
-    <div class="sidebar-individual-event">
-      <h3><%= link_to event.name, event %></h3>
-      <p class='starting-date'><%= l event.starts_at, format: :tkh_default %></p>
-      <p>
-        <%= truncate event.description, length: 105, separator: ' ' %><br />
-        <%= link_to 'see details', event %>
-      </p>
-    </div>
-  <% end %>
-  <%= local_assigns[:link_to_all_events] unless local_assigns[:link_to_all_events].nil? %>
+<% unless events.blank? %>
+  <div class="upcoming-events-in-sidebar">
+    <h2><%= heading %></h2>
+    <% events.each do |event| %>
+      <div class="sidebar-individual-event">
+        <h3><%= link_to event.shortest_name, event %></h3>
+        <p class='starting-date'><%= l event.starts_at, format: :tkh_default %></p>
+        <p>
+          <%= link_to "<span class='glyphicon glyphicon-eye-open'></span> all details".html_safe, event, class: "btn btn-default"  %>
+        </p>
+      </div>
+    <% end %>
+    <%#= local_assigns[:link_to_all_events] unless local_assigns[:link_to_all_events].nil? %>
+  </div>
 <% end %>
+
