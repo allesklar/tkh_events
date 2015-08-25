@@ -1,14 +1,14 @@
-<%= simple_form_for @event, :html => { role: 'form' } do |f| %>
+<%= simple_form_for @event, :html => { role: 'form', multipart: true } do |f| %>
   <%= f.error_notification %>
 
     <%= f.input :name,
                 input_html: { size: 55 },
-                placeholder: 'program name in Paris with Teacher Name',
-                hint: 'Imagine somebody sees that title in the middle of Google results or in a Facebook link. How do you TRUTHFULLY make the users click?' %>
+                placeholder: 'Program name in Paris with Teacher Name',
+                hint: 'Imagine somebody sees that title in the middle of the Google search results. How do you TRUTHFULLY make the users click? Maximum length 60-70 characters.' %>
     <%= f.input :nickname,
                 input_html: { size: 55 },
                 placeholder: 'just the program name',
-                hint: "For a list. Don't repeat info in every program. For example location and teacher if they are always the same." %>
+                hint: "For a list on this site. Don't repeat info in every program. For example location and teacher if they are always the same." %>
     <%= f.input :tiny_name,
                 input_html: { size: 55 },
                 placeholder: 'workshop in Berlin',
@@ -19,10 +19,13 @@
     <%= f.input :published %>
     <%= f.input :description,
                 input_html: { cols: 75, rows: 3 },
-                hint: 'Used by search engines and in several places in your site. Should make users want to visit the whole page.' %>
+                hint: 'Used by search engines and in several places in your site. Should make users want to visit the whole page. Maximum 155 characters.' %>
     <%= f.input :body,
                 input_html: { rows: 30, class: 'ckeditor' },
                 hint: "Don't forget to use images, headings, bullets, etc. to make the page appealing to your user." %>
+    <%= f.input :image,
+                label: t('activerecord.attributes.illustration.image'),
+                hint: "Ideal ratio: 1.91x1 - between 1.6x1 to 2.25x1 is okay. 400px wide at the very least. 1,200px wide or more recommended." %>
 
     <hr />
 

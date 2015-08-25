@@ -22,6 +22,7 @@ module TkhEvents
         migration_template "create_registrations.rb", "db/migrate/create_registrations.rb"
         migration_template "create_event_organizers.rb", "db/migrate/create_event_organizers.rb"
         migration_template "add_tiny_name_to_events.rb", "db/migrate/add_tiny_name_to_events.rb"
+        migration_template "add_image_to_events.rb", "db/migrate/add_image_to_events.rb"
       end
 
     end

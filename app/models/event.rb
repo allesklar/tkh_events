@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
 
   attr_reader(:organizer_id) # to be used in the add_organizer_to_event_form partial
 
+  # tkh_search gem
   tkh_searchable
   def self.tkh_search_indexable_fields
     indexable_fields = {
@@ -16,6 +17,9 @@ class Event < ActiveRecord::Base
       body: 2
     }
   end
+
+  # tkh_illustrations gem
+  mount_uploader :image, ImageUploader
 
   def to_param
     name ? "#{id}-#{name.to_url}" : id

@@ -1,0 +1,61 @@
+<% content_for :search_metas do %>
+  <!-- General meta info + SEO -->
+  <title><%= event.name %></title>
+  <meta name="description" content="<%= event.description %>" />
+  <%= link_to '', event_url(event), rel: 'canonical' %>
+<% end %>
+
+<% content_for :social_metas do %>
+
+  <!-- Covering the main social media sites -->
+
+   <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+  <html itemscope itemtype="http://schema.org/Event">
+
+  <!-- Schema.org markup for Google+ -->
+  <meta itemprop="name" content="<%= event.name %>">
+  <meta itemprop="description" content="<%= event.description %>">
+  <!-- image at least 401px wide. not wider than 5x2. 600px wide is enough for now -->
+  <meta itemprop="image" content="<%= event.image.xl.url unless event.image.blank? %>">
+  <meta itemprop="organizer" content="<%= Setting.first.try(:company_name).present? ? Setting.first.company_name : Setting.first.try(:site_name) %>">
+  <!--
+    TODO, add
+      prop.performer teacher association; can be coded in html body
+      prop.location location association; can be coded in html body
+      prop.in_language arrays supported? association ?;
+  -->
+  <meta itemprop="startDate" content="<%= event.starts_at.iso8601 %>">
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@<%= Setting.first.try(:twitter_handle) %>">
+  <meta name="twitter:url" content="<%= event_url(event) %>">
+  <meta name="twitter:title" content="<%= event.name %>">
+  <meta name="twitter:creator" content="@<%= Setting.first.try(:twitter_handle) %>">
+  <meta name="twitter:description" content="<%= event.description %>">
+  <!-- Twitter summary card with large image must be at least 280x150px (Moz) -->
+  <!--
+    Twitter will preserve the ratio and resize the image to the following:
+    Web: maximum height of 375px, maximum width of 435px
+    Mobile (non-retina displays): maximum height of 375px, maximum width of 280px
+    Mobile (retina displays): maximum height of 750px, maximum width of 560px
+  -->
+  <meta name="twitter:image:src" content="<%= event.image.xl.url unless event.image.blank? %>">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="<%= event.name %>" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="<%= event_url(event) %>" />
+  <!-- img should be at minimum 200x200, 600x315 is much better, at least 1200x630 is recommended -->
+  <!-- 1.91 is the optimum ration for open graph stories -->
+  <meta property="og:image" content="<%= event.image.giant.url unless event.image.blank? %>" />
+  <!-- TODO -->
+  <!-- these two tags are important to ensure the image is prefetched and shown to first 'sharer' -->
+<!--   <meta property="og:image:width" content="http://example.com/image.jpg" />
+  <meta property="og:image:height" content="http://example.com/image.jpg" /> -->
+  <meta property="og:description" content="<%= event.description %>" />
+  <meta property="og:site_name" content="<%= Setting.first.try(:site_name) %>" />
+  <meta property="article:published_time" content="<%= event.created_at.iso8601 %>" />
+  <meta property="article:modified_time" content="<%= event.updated_at.iso8601 %>" />
+
+<% end %>

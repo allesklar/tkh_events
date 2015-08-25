@@ -1,6 +1,7 @@
 require "tkh_events/version"
 require "tkh_search"
 require "tkh_toolbox"
+require "tkh_illustrations"
 
 module TkhEvents
   class Engine < ::Rails::Engine

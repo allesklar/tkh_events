@@ -1,6 +1,4 @@
-<% content_for :meta_title, @event.name %>
-<% content_for :meta_description, @event.description %>
-<% content_for :canonical_link, link_to('', @event, rel: 'canonical') %>
+<%= render 'metas', event: @event %>
 
 <%= render 'draft_notice' unless @event.published? %>
 
