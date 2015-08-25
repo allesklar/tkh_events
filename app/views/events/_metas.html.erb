@@ -15,7 +15,7 @@
   <meta itemprop="name" content="<%= event.name %>">
   <meta itemprop="description" content="<%= event.description %>">
   <!-- image at least 401px wide. not wider than 5x2. 600px wide is enough for now -->
-  <meta itemprop="image" content="<%= "#{Rails.root.to_s}/public/event.image.xl.url" unless event.image.blank? %>">
+  <meta itemprop="image" content="<%= request.protocol + request.host_with_port + event.image.xl.url unless event.image.blank? %>">
   <meta itemprop="organizer" content="<%= Setting.first.try(:company_name).present? ? Setting.first.company_name : Setting.first.try(:site_name) %>">
   <!--
     TODO, add
@@ -39,7 +39,7 @@
     Mobile (non-retina displays): maximum height of 375px, maximum width of 280px
     Mobile (retina displays): maximum height of 750px, maximum width of 560px
   -->
-  <meta name="twitter:image:src" content="<%= "#{Rails.root.to_s}/public/event.image.xl.url" unless event.image.blank? %>">
+  <meta name="twitter:image:src" content="<%= request.protocol + request.host_with_port + event.image.xl.url unless event.image.blank? %>">
 
   <!-- Open Graph data -->
   <meta property="og:title" content="<%= event.name %>" />
@@ -47,7 +47,7 @@
   <meta property="og:url" content="<%= event_url(event) %>" />
   <!-- img should be at minimum 200x200, 600x315 is much better, at least 1200x630 is recommended -->
   <!-- 1.91 is the optimum ration for open graph stories -->
-  <meta property="og:image" content="<%= "#{Rails.root.to_s}/public/event.image.giant.url" unless event.image.blank? %>" />
+  <meta property="og:image" content="<%= request.protocol + request.host_with_port + event.image.giant.url unless event.image.blank? %>" />
   <!-- TODO -->
   <!-- these two tags are important to ensure the image is prefetched and shown to first 'sharer' -->
 <!--   <meta property="og:image:width" content="http://example.com/image.jpg" />
