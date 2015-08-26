@@ -3,12 +3,10 @@
 <% unless @events.blank? %>
   <% @events.each do |event| %>
     <div class="individual-event-in-list">
-      <h3><%= link_to event.name, event %></h3>
+      <h3><%= link_to event.shortest_name, event %></h3>
+      <%= content_tag :p, link_to(image_tag( event.image.xxl ), event) if event.image.present? %>
       <p class='starting-date'><%= l event.starts_at, format: :tkh_default %></p>
-      <p>
-        <%= event.description %><br />
-        <%= link_to 'see details', event %>
-      </p>
+      <p class="description"><%= event.description %></p>
     </div>
   <% end %>
 <% end %>

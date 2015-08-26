@@ -14,7 +14,7 @@
     <% unless @events.nil? %>
       <% @events.each do |event| %>
         <tr>
-          <td><%= image_tag event.image.thumbnail %></td>
+          <td><%= image_tag event.image.small %></td>
           <td>
             <%= "#{link_to event.name, event} <span class='badge'>#{event.registrations.count}/#{event.maximum_number_of_registrants}</span>".html_safe %><br />
             starting <%= l event.starts_at, format: :tkh_default %><br />
