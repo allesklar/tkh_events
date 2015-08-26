@@ -5,9 +5,8 @@
 <table class='table table-striped'>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Starting on</th>
-      <th><%= t('actions') %></th>
+      <th>Pic</th>
+      <th>Program Details</th>
     </tr>
   </thead>
 
@@ -15,9 +14,12 @@
     <% unless @events.nil? %>
       <% @events.each do |event| %>
         <tr>
-          <td><%= "#{link_to event.name, event} <span class='badge'>#{event.registrations.count}/#{event.maximum_number_of_registrants}</span>".html_safe %></td>
-          <td><%= l event.starts_at, format: :tkh_default %></td>
-          <td><%= link_to "<span class='glyphicon glyphicon-eye-open'></span> admin view".html_safe, admin_view_event_path(event), class: 'btn btn-xs btn-default' %><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), class: 'btn btn-xs btn-primary' %><%= link_to "<span class='glyphicon glyphicon-plus'></span> duplicate".html_safe, duplicate_event_path(event), class: 'btn btn-xs btn-default', method: :post %></td>
+          <td><%= image_tag event.image.thumbnail %></td>
+          <td>
+            <%= "#{link_to event.name, event} <span class='badge'>#{event.registrations.count}/#{event.maximum_number_of_registrants}</span>".html_safe %><br />
+            starting <%= l event.starts_at, format: :tkh_default %><br />
+            <%= link_to "<span class='glyphicon glyphicon-eye-open'></span> admin view".html_safe, admin_view_event_path(event), class: 'btn btn-xs btn-default' %><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(event), class: 'btn btn-xs btn-primary' %><%= link_to "<span class='glyphicon glyphicon-plus'></span> duplicate".html_safe, duplicate_event_path(event), class: 'btn btn-xs btn-default', method: :post %>
+          </td>
         </tr>
       <% end %>
     <% else %>
