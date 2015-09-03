@@ -87,13 +87,25 @@ class EventsController < ApplicationController
   end
 
   def register
-    registration = Registration.create event_id: @event.id, registrant_id: current_user.id
-    if registration
-      Activity.create doer_id: current_user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
-      send_confirmation_email
-      redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Check your email inbox or spam folder for your official confirmation.".html_safe
-    else
-      redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
+    unless current_user # straight email registration for most people who are not logged in
+      user = Member.find_or_create_by email: params[:event][:email]
+      registration = Registration.create event_id: @event.id, registrant_id: user.id
+      if user && registration
+        Activity.create doer_id: user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
+        send_confirmation_email(user)
+        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event.".html_safe
+      else
+        redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
+      end
+    else # the user is already logged in
+      registration = Registration.create event_id: @event.id, registrant_id: current_user.id
+      if registration
+        Activity.create doer_id: current_user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
+        send_confirmation_email(current_user)
+        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event.".html_safe
+      else
+        redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
+      end
     end
   end
 
@@ -105,12 +117,13 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit( :name, :nickname, :tiny_name, :description, :body, :starts_at, :price, :maximum_number_of_registrants, :confirmation_emails_text, :confirmation_emails_html, :published, :image )
+      # email attribute is an attr-reader used in the event registration partials
+      params.require(:event).permit( :name, :nickname, :tiny_name, :description, :body, :starts_at, :price, :maximum_number_of_registrants, :confirmation_emails_text, :confirmation_emails_html, :published, :image, :email )
     end
 
-    def send_confirmation_email
+    def send_confirmation_email(participant)
       begin
-        EventMailer.confirmation(current_user, @event).deliver_now
+        EventMailer.confirmation(participant, @event).deliver_now
       rescue Exception => e
         AdminMailer.rescued_exceptions(e, "Some exception occurred while trying to send an event confirmation email.").deliver_now
       end

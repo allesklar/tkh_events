@@ -1,0 +1,24 @@
+<% if current_user %>
+
+  <% if Registration.find_by event_id: @event.id, registrant_id: current_user.id %>
+    <p>You are already registered for this event.</p>
+  <% else # the user has not yet registered for this event %>
+    <p class="text-center">Book your place now and we'll send you payment instructions.</p>
+    <p class="text-center "><%= link_to "<span class='glyphicon glyphicon-thumbs-up'></span> Reserve Your Space Now!".html_safe, register_event_path(@event), method: :post, class: 'btn btn-lg btn-primary' %></p>
+  <% end %>
+
+<% else # non logged in users can book in one step with their email address %>
+
+  <%= form_for @event, url: register_event_path(@event), method: :post, html: { class: "event-registration-form text-center" } do |f| %>
+
+    <p id="form-field">
+      <span class='glyphicon glyphicon-envelope'></span>
+      <%= f.text_field :email, placeholder: 'your_email@example.com' %>
+    </p>
+
+    <%= button_tag type: 'submit', class: 'btn btn-lg btn-primary' do %>
+      <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;Reserve Your Space Now!
+    <% end %>
+  <% end %>
+
+<% end %>

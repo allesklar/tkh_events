@@ -28,7 +28,7 @@
 <% if @event.registrations.any? %>
   <ol>
     <% @event.registrations.each do |registration| %>
-      <%= content_tag :li, link_to( registration.registrant.name, member_path( registration.registrant ) ) %>
+      <%= content_tag :li, link_to( (registration.registrant.name.present? ? registration.registrant.name : 'no name given yet'), member_path( registration.registrant ) ) %>
     <% end %>
   </ol>
 <% else %>

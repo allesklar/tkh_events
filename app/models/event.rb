@@ -6,7 +6,9 @@ class Event < ActiveRecord::Base
   has_many :registrations
   has_many :registrants, through: :registrations
 
-  attr_reader(:organizer_id) # to be used in the add_organizer_to_event_form partial
+  # former is used in the add_organizer_to_event_form partial and second one in event registration partials
+  attr_reader :organizer_id
+  attr_reader :email
 
   # tkh_search gem
   tkh_searchable
