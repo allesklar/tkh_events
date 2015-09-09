@@ -28,7 +28,13 @@
 <% if @event.registrations.any? %>
   <ol>
     <% @event.registrations.each do |registration| %>
-      <%= content_tag :li, link_to( (registration.registrant.name.present? ? registration.registrant.name : registration.registrant.email), member_path( registration.registrant ) ) %>
+      <% if registration.registrant.nil? %>
+        <%= content_tag :li, "user has been deleted" %>
+      <% elsif registration.registrant.name.present? %>
+        <%= content_tag :li, link_to( registration.registrant.name, member_path( registration.registrant ) ) %>
+      <% else %>
+        <%= content_tag :li, link_to( registration.registrant.email, member_path( registration.registrant ) ) %>
+      <% end %>
     <% end %>
   </ol>
 <% else %>
