@@ -29,11 +29,11 @@
   <ol>
     <% @event.registrations.each do |registration| %>
       <% if registration.registrant.nil? %>
-        <%= content_tag :li, "user has been deleted #{link_to(" <span class='glyphicon glyphicon-trash'></span> un-register!".html_safe, unregister_event_path(id: @event.id, registration_id: registration.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, :class => 'btn btn-xs btn-danger')}".html_safe %>
+        <%= content_tag :li, "user has been deleted #{link_to(" <span class='glyphicon glyphicon-minus'></span>".html_safe, unregister_event_path(id: @event.id, registration_id: registration.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, title: 'unregister this participant!', :class => 'btn btn-xs btn-danger')}".html_safe %>
       <% elsif registration.registrant.name.present? %>
-        <%= content_tag :li, link_to( registration.registrant.name, member_path( registration.registrant )) + link_to(" <span class='glyphicon glyphicon-trash'></span> un-register!".html_safe, unregister_event_path(id: @event.id, registration_id: registration.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, :class => 'btn btn-xs btn-danger') %>
+        <%= content_tag :li, link_to( registration.registrant.name, member_path( registration.registrant )) + ' ' + link_to(" <span class='glyphicon glyphicon-minus'></span>".html_safe, unregister_event_path(id: @event.id, registration_id: registration.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, title: 'unregister this participant!', :class => 'btn btn-xs btn-danger') %>
       <% else %>
-        <%= content_tag :li, link_to( registration.registrant.email, member_path( registration.registrant )) + link_to(" <span class='glyphicon glyphicon-trash'></span> un-register!".html_safe, unregister_event_path(id: @event.id, registration_id: registration.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, :class => 'btn btn-xs btn-danger') %>
+        <%= content_tag :li, link_to( registration.registrant.email, member_path( registration.registrant ))  + ' ' + link_to(" <span class='glyphicon glyphicon-minus'></span>".html_safe, unregister_event_path(id: @event.id, registration_id: registration.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, title: 'unregister this participant!', :class => 'btn btn-xs btn-danger') %>
       <% end %>
     <% end %>
   </ol>
