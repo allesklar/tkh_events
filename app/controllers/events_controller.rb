@@ -1,9 +1,9 @@
 class EventsController < ApplicationController
 
-  before_filter :authenticate,            :except => [ 'show', 'register']
-  before_filter :authenticate_with_admin, :except => [ 'show', 'register']
+  before_filter :authenticate,            :except => [ 'show', 'register' ]
+  before_filter :authenticate_with_admin, :except => [ 'show', 'register' ]
 
-  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :admin_view, :add_organizer, :remove_organizer ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :unregister, :admin_view, :add_organizer, :remove_organizer ]
 
   def index
     @events = Event.by_recent.paginate page: params[:page], per_page: 20
@@ -94,7 +94,7 @@ class EventsController < ApplicationController
         if user && registration
           Activity.create doer_id: user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
           send_confirmation_email(user)
-          redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Please check your inbox or spam folder for your confirmation.".html_safe
+          redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Please check your <strong>inbox</strong> or <strong>spam folder</strong> for your confirmation.".html_safe
         else
           redirect_to @event, alert: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
         end
@@ -106,11 +106,17 @@ class EventsController < ApplicationController
       if registration
         Activity.create doer_id: current_user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
         send_confirmation_email(current_user)
-        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Please check your inbox or spam folder for your confirmation.".html_safe
+        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Please check your <strong>inbox</strong> or <strong>spam folder</strong> for your confirmation.".html_safe
       else
         redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
       end
     end
+  end
+
+  def unregister
+    registration = Registration.find params[:registration_id]
+    registration.destroy
+    redirect_to admin_view_event_path(@event), notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> The registration has been deleted.".html_safe
   end
 
   private

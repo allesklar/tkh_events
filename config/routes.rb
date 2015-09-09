@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :events do
       member do
         delete  :remove_organizer
+        delete  :unregister
         get     :admin_view
         patch   :add_organizer
         post    :duplicate
