@@ -88,21 +88,25 @@ class EventsController < ApplicationController
 
   def register
     unless current_user # straight email registration for most people who are not logged in
-      user = Member.find_or_create_by email: params[:event][:email]
-      registration = Registration.create event_id: @event.id, registrant_id: user.id
-      if user && registration
-        Activity.create doer_id: user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
-        send_confirmation_email(user)
-        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event.".html_safe
+      if params[:event][:email].present?
+        user = Member.find_or_create_by email: params[:event][:email]
+        registration = Registration.create event_id: @event.id, registrant_id: user.id
+        if user && registration
+          Activity.create doer_id: user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
+          send_confirmation_email(user)
+          redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Please check your inbox or spam folder for your confirmation.".html_safe
+        else
+          redirect_to @event, alert: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
+        end
       else
-        redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
+        redirect_to @event, alert: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> You need to provide a valid email address in order to register for this program.".html_safe
       end
     else # the user is already logged in
       registration = Registration.create event_id: @event.id, registrant_id: current_user.id
       if registration
         Activity.create doer_id: current_user.id, message: "registered for the event entitled: #{view_context.link_to @event.short_name, @event}"
         send_confirmation_email(current_user)
-        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event.".html_safe
+        redirect_to @event, notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have been registered for this event. Please check your inbox or spam folder for your confirmation.".html_safe
       else
         redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
       end
