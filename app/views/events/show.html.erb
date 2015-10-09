@@ -10,6 +10,9 @@
 
 <%= raw parse_event(@event.body) %>
 
+<%= render 'comments/comment_section', host: @event if Setting.first.enable_comments_in_pages? %>
+
+
 <%# partial in tkh_toolbox gem or has to be added in host app %>
 <%= render 'shared/social_sharing', meta_title: @event.short_name %>
 

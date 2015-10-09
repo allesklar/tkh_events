@@ -6,6 +6,8 @@ class Event < ActiveRecord::Base
   has_many :registrations
   has_many :registrants, through: :registrations
 
+  has_many :comments, as: :commentable, :dependent => :destroy
+
   # former is used in the add_organizer_to_event_form partial and second one in event registration partials
   attr_reader :organizer_id
   attr_reader :email
