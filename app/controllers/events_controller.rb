@@ -115,7 +115,14 @@ class EventsController < ApplicationController
   end
 
   def register_someone
-
+    registration = Registration.create event_id: @event.id, registrant_id: Registrant.find_by( email: params[:registration][:registrant_email]).id
+      if registration
+        Activity.create doer_id: current_user.id, message: "registered #{view_context.link_to registration.registrant.name_or_email, member_path(registration.registrant)} for the event entitled: #{view_context.link_to @event.short_name, @event}."
+        # send_confirmation_email(current_user) # OPTIMIZE - may be implement this as an option later
+        redirect_to admin_view_event_path(@event), notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> You have registered #{view_context.link_to registration.registrant.name_or_email, member_path(registration.registrant)} for this event. ".html_safe
+      else
+        redirect_to admin_view_event_path(@event), warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem registering this person for this event".html_safe
+      end
   end
 
   def unregister
