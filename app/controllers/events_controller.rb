@@ -127,7 +127,10 @@ class EventsController < ApplicationController
 
   def unregister
     registration = Registration.find params[:registration_id]
+    event = registration.event
+    quitter = registration.registrant
     registration.destroy
+    Activity.create doer_id: current_user.id, message: "cancelled #{view_context.link_to quitter.name_or_email, member_path(registration.registrant)}'s registration for the event entitled: #{view_context.link_to @event.short_name, @event}."
     redirect_to admin_view_event_path(@event), notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> The registration has been deleted.".html_safe
   end
 
