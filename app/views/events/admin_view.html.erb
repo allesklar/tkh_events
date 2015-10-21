@@ -41,7 +41,15 @@
   <ul><li>Nobody registered so far.</li></ul>
 <% end %>
 
-<br />
+<h3>Register a Student Manually</h3>
+<%= render 'register_someone_form' %>
+
+<hr />
+
 <p><%= link_to "<span class='glyphicon glyphicon-eye-open'></span> view event page".html_safe, @event, class: 'btn btn-default' %><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(@event), class: 'btn btn-default' %></p>
 
 <%= render 'shared/admin_sidebar' %>
+
+<% content_for :extra_admin_javascript do %>
+  <%= javascript_include_tag "events/events" %>
+<% end %>

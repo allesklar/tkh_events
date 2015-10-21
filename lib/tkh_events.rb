@@ -6,7 +6,7 @@ require "tkh_illustrations"
 module TkhEvents
   class Engine < ::Rails::Engine
     initializer "TkhEvent precompile hook", :group => :all do |app|
-      app.config.assets.precompile += [ 'event_public_emails.css' ]
+      app.config.assets.precompile += %w( event_public_emails.css events/events.js )
     end
   end
 end

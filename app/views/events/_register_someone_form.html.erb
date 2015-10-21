@@ -1,0 +1,13 @@
+<%= simple_form_for @registration, url: register_someone_event_path(@event), :html => { role: 'form' } do |f| %>
+
+  <% # FIXME - set up ajax autocomplete %>
+  <%= f.input :registrant_email,
+                as: :string,
+                :wrapper_html => { id: 'registration_registrant_email' },
+                :input_html => {  autocomplete: 'off',
+                                  data: { source: Registrant.by_recent.collect { |r| [ r.email, r.id ] } }
+                                  } %>
+
+  <%= f.submit "register him/her to this event", class: 'btn btn-sm btn-primary' %>
+
+<% end %>

@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :authenticate,            :except => [ 'show', 'register' ]
   before_filter :authenticate_with_admin, :except => [ 'show', 'register' ]
 
-  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :unregister, :admin_view, :add_organizer, :remove_organizer ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :unregister, :admin_view, :add_organizer, :remove_organizer, :register_someone ]
 
   def index
     @events = Event.by_recent.paginate page: params[:page], per_page: 20
@@ -11,6 +11,7 @@ class EventsController < ApplicationController
   end
 
   def admin_view
+    @registration = Registration.new
     switch_to_admin_layout
   end
 
@@ -111,6 +112,10 @@ class EventsController < ApplicationController
         redirect_to @event, warning: "<span class='glyphicon glyphicon-exclamation-sign'></span> <strong>Attention</strong> There was a problem recording your registration. Please try again.".html_safe
       end
     end
+  end
+
+  def register_someone
+
   end
 
   def unregister

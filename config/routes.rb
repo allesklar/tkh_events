@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         post    :duplicate
         post    :publish
         post    :register
+        post    :register_someone
       end
     end
 
