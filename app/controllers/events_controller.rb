@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :authenticate,            :except => [ 'show', 'register' ]
   before_filter :authenticate_with_admin, :except => [ 'show', 'register' ]
 
-  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :unregister, :admin_view, :add_organizer, :remove_organizer, :register_someone ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :publish, :register, :unregister, :admin_view, :add_organizer, :remove_organizer, :register_someone, :attendance_printout ]
 
   def index
     @events = Event.by_recent.paginate page: params[:page], per_page: 20
@@ -132,6 +132,17 @@ class EventsController < ApplicationController
     registration.destroy
     Activity.create doer_id: current_user.id, message: "cancelled #{view_context.link_to quitter.name_or_email, member_path(registration.registrant)}'s registration for the event entitled: #{view_context.link_to @event.short_name, @event}."
     redirect_to admin_view_event_path(@event), notice: "<span class='glyphicon glyphicon-heart'></span> <strong>Success</strong> The registration has been deleted.".html_safe
+  end
+
+  def attendance_printout
+    @registrants = @event.registrants
+    respond_to do |format|
+      format.pdf do
+        pdf = AttendanceListPdf.new(@event, @registrants)
+        send_data pdf.render, filename: 'attendance_list.pdf', type: 'application/pdf'
+      end
+    end
+
   end
 
   private

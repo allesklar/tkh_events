@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         delete  :remove_organizer
         delete  :unregister
         get     :admin_view
+        get     :attendance_printout
         patch   :add_organizer
         post    :duplicate
         post    :publish

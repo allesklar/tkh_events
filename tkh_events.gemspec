@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'tkh_search'
   spec.add_dependency 'tkh_toolbox'
   spec.add_dependency 'tkh_illustrations' # for the Image Uploader
+  spec.add_dependency 'prawn' # for pdf generation of event attendance printout
+  spec.add_dependency 'prawn-table'
 end

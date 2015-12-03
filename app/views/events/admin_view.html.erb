@@ -46,7 +46,7 @@
 
 <hr />
 
-<p><%= link_to "<span class='glyphicon glyphicon-eye-open'></span> view event page".html_safe, @event, class: 'btn btn-default' %><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(@event), class: 'btn btn-default' %></p>
+<p><%= link_to "<span class='glyphicon glyphicon-eye-open'></span> view event page".html_safe, @event, class: 'btn btn-default' %><%= link_to "<span class='glyphicon glyphicon-pencil'></span> edit".html_safe, edit_event_path(@event), class: 'btn btn-default' %><%= link_to "<span class='glyphicon glyphicon-print'></span> attendance pdf".html_safe, attendance_printout_event_path(@event, format: 'pdf'), class: 'btn btn-default' %></p>
 
 <%= render 'shared/admin_sidebar' %>
 
